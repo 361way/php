@@ -1,0 +1,8 @@
+get it from http://magnetikonline.com/sysstatgraph/
+
+YOU can use  sysstatgraph read sar data generated graph
+
+
+1、edit config.php ,set sar data locate ,which  network adapters to graph
+2、If have not web server ,you can use 'php index.php' generated data.json
+
