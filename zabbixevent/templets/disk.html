@@ -1,0 +1,27 @@
+<div id="page-wrapper">
+<div class="container-fluid">
+<!-- Page Heading -->
+<div class="row">
+ <ul class="nav nav-pills ">
+   <li role="presentation" class="active"><a href="disk.php?q=df">磁盘</a></li>
+   <li role="presentation"><a href="disk.php?q=inode">Inode</a></li>
+ </ul>
+</div>
+<!-- hr style="height:1px;border:none;border-top:1px dashed #0066CC;" / -->
+<!-- hr style="height:5px;border:none;border-top:5px ridge green;" / -->
+<!-- hr style=" height:2px;border:none;border-top:2px dotted #185598;" / -->
+<hr style="height:3px;border:none;border-top:3px double blue;" />
+<!-- /.row -->
+<div class="alert alert-warning">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	<!-- strong>注意：</strong>最近一周load average告警次数统计,如果CPU多次load average告警，请考虑扩容、优化或屏蔽告警! -->
+	<strong>注意：</strong>{notice}
+</div>
+<div class="row">
+<center>
+<table class="table table-bordered table-hover" style="table-layout:automatic;width:1100px">
+<thead>
+  <tr><th>主机名</th><th>触发ID</th><th>告警内容</th><th>是否恢复</th><th>告警时间</th></body></tr>
+</thead>
+<tbody>
+

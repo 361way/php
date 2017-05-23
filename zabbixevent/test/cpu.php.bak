@@ -1,0 +1,80 @@
+<?php require ('sidebar.php'); ?>
+<div id="page-wrapper">
+<div class="container-fluid">
+<!-- Page Heading -->
+<div class="row">
+ <ul class="nav nav-pills ">
+   <li role="presentation" class="active"><a href="cpu.php?q=CPU%E6%A0%B8%E5%BF%83%E6%95%B0">CPU load</a></li>
+   <li role="presentation"><a href="cpu.php?q=CPU%E4%B8%8A%E4%B8%8B%E6%96%87">CPU上下文</a></li>
+   <li role="presentation"><a href="cpu.php?q=idel%E4%B8%8D%E8%B6%B3">idle不足</a></li>
+   <li role="presentation"><a href="cpu.php?q=CPU%20iowait">IOWait</a></li>
+ </ul>
+</div>
+<!-- hr style="height:1px;border:none;border-top:1px dashed #0066CC;" / -->
+<!-- hr style="height:5px;border:none;border-top:5px ridge green;" / -->
+<!-- hr style=" height:2px;border:none;border-top:2px dotted #185598;" / -->
+<hr style="height:3px;border:none;border-top:3px double blue;" />
+<!-- /.row -->
+<div class="alert alert-warning">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	<strong>注意：</strong>最近一周load average告警次数统计,如果CPU多次load average告警，请考虑扩容、优化或屏蔽告警!
+</div>
+<div class="row">
+<center>
+<table class="table table-bordered table-hover" style="table-layout:automatic;width:600px">
+<thead>
+    <tr>
+	<th>主机名</th>
+	<th>次数统计</th>
+    </tr>
+</thead>
+<tbody>
+<?php
+$q=$_GET["q"];
+$mysqli = new mysqli('10.211.137.173','eventreport','Eventreport123$','eventreport');
+
+/* check connection */
+if ($mysqli->connect_errno) {
+    printf("Connect failed: %s\n", $mysqli->connect_error);
+    exit();
+}
+$mysqli->query("SET NAMES 'utf8'");
+
+function CountQuery($string,$mysqli)
+{
+    $sql="select DISTINCT reportip,count(reportip) count from report 
+        where alarmtime > DATE_SUB(CURDATE(), INTERVAL 1 WEEK) 
+        and alarmstat=0  and alarmname like '%{$string}%' group 
+        by reportip order by count desc";
+    //echo $sql;
+    $q=$mysqli->query($sql);
+    while($row=$q->fetch_assoc()) {
+        echo "<tr><td>".$row["reportip"]."</td><td>".$row["count"]."</td></tr>\n";
+        //return "<tr><td>".$row["reportip"]."</td><td>".$row["count"]."</td></tr>\n";
+    }
+    $q->close();
+    $mysqli->close();
+}
+//CountQuery($str,$mysqli);
+$qstr = array("CPU核心数", "CPU上下文", "idel不足", "CPU iowait");
+$qtime = array("WEEK","DAY","MONTH","YEAR");
+
+
+
+//if (in_array($q, $qstr))
+if (in_array($q, $qstr ,true))
+    {
+    CountQuery($q,$mysqli);
+    }else
+    {
+    echo "你查询的字段不允许或不存在";
+    }
+
+//in_array有性能问题，可以精确匹配类型用 in_array($q, $qstr,true) 或者换为isset函数检测
+
+
+?>
+  </tbody> 
+</table>
+</center>
+<?php require ('footer.php'); ?>
