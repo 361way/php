@@ -2,7 +2,7 @@
 <table class="table table-bordered table-hover">
 <?php
 $q=$_GET["q"];
-$mysqli = new mysqli('10.211.137.173','eventreport','Eventreport123$','eventreport');
+$mysqli = new mysqli('192.168.137.173','eventreport','Eventreport123$','eventreport');
 
 /* check connection */
 if ($mysqli->connect_errno) {

@@ -1,7 +1,7 @@
 <?php
 $q=$_GET["q"];
 $t=$_GET["t"];
-$mysqli = new mysqli('10.211.137.173','report','Report123$','report');
+$mysqli = new mysqli('192.168.137.173','report','Report123$','report');
 
 /* check connection */
 if ($mysqli->connect_errno) {
